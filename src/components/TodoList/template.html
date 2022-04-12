@@ -1,0 +1,13 @@
+<div>
+    <h2 ref="heading">{{heading}}</h2>
+    <input ref="input" set="onblur: handleBlur; value: heading" hidden />
+    <button ref="editHeadingButton" set="onclick: editHeading">Edit Heading</button>
+    <br/>
+    <br/>
+    <div ref="list_wrapper"></div>
+    <div class="toolbar">
+        <button set="onclick: addItem">Add Item</button>
+        <button set="onclick: clearChecked">Clear Checked</button>
+        <button set="onclick: removeChecked">Remove Checked</button>
+    </div>
+</div>

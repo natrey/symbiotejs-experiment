@@ -1,5 +1,7 @@
 import { BaseComponent } from '@symbiotejs/symbiote';
 import TodoItem from '../TodoItem';
+import template from './template.html';
+import { TODO_LIST_HEADING } from '../../constants';
 
 class TodoList extends BaseComponent {
   get items() {
@@ -7,7 +9,19 @@ class TodoList extends BaseComponent {
   }
 
   init$ = {
-    heading: 'List heading:',
+    heading: TODO_LIST_HEADING,
+    editHeading: () => {
+      this.ref.heading.setAttribute('hidden', 'hidden');
+      this.ref.input.removeAttribute('hidden');
+
+      this.ref.input.focus();
+    },
+    handleBlur: (e) => {
+      this.$.heading = e.target.value;
+
+      this.ref.heading.removeAttribute('hidden');
+      this.ref.input.setAttribute('hidden', 'hidden');
+    },
     addItem: () => {
       this.ref.list_wrapper.appendChild(new TodoItem());
     },
@@ -30,18 +44,16 @@ class TodoList extends BaseComponent {
   initCallback() {
     // Add first item:
     this.$.addItem();
+
+    this.sub('heading', (val) => {
+      if (!val) {
+        this.$.heading = TODO_LIST_HEADING;
+      }
+    });
   }
 }
 
-TodoList.template = /* html */ `
-    <h2>{{heading}}</h2>
-    <div ref="list_wrapper"></div>
-    <div class="toolbar">
-    <button set="onclick: addItem">Add Item</button>
-    <button set="onclick: clearChecked">Clear Checked</button>
-    <button set="onclick: removeChecked">Remove Checked</button>
-    </div>
-`;
+TodoList.template = /* html */ template;
 TodoList.reg('todo-list');
 
 export default TodoList;
