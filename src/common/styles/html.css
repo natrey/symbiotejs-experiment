@@ -1,9 +1,11 @@
 @import url('../../common/styles/vars.css');
+
 body {
     font-family: -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+    margin: 0;
 }
 
-input {
+input[type='text'], [contenteditable="true"] {
     -webkit-appearance: none;
     box-sizing: border-box;
     margin: 0;
@@ -19,14 +21,17 @@ input {
     border: 1px solid #d9d9d9;
     border-radius: 2px;
     transition: all .3s;
+    outline: 0;
 }
 
-input:hover {
+input:hover, 
+[contenteditable="true"]:hover {
     border-color: #40a9ff;
     border-right-width: 1px;
 }
 
-input:focus {
+input:focus,
+[contenteditable="true"]:focus {
     border-color: #40a9ff;
     box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
     border-right-width: 1px;
@@ -35,7 +40,8 @@ input:focus {
 
 button {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     white-space: nowrap;
     outline: 0;
     text-align: center;
@@ -73,4 +79,8 @@ button:disabled {
     text-shadow: none;
     box-shadow: none;
     cursor: not-allowed;
+}
+
+small {
+    color: var( --secondary-color);
 }

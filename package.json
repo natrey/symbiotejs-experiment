@@ -46,6 +46,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
+    "@funboxteam/chronos": "^4.1.0",
     "@symbiotejs/symbiote": "^1.5.3"
   }
 }

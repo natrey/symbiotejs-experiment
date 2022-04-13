@@ -25,7 +25,7 @@ class TodoListHeading extends BaseComponent {
   initCallback() {
     this.sub('heading', (val) => {
       if (!val) {
-        this.$.heading = TODO_LIST_HEADING;
+        this.$.heading = 'Empty heading';
       }
     });
   }

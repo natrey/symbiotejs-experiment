@@ -1,14 +1,13 @@
 import { BaseComponent } from '@symbiotejs/symbiote';
+
+import commonStyles from './common/styles/html.css'; // eslint-disable-line no-unused-vars
+
 import TodoList from './components/TodoList'; // eslint-disable-line no-unused-vars
 
 class App extends BaseComponent {
-  init$ = {
-    heading: 'To-Do List App',
-  };
 }
 
 App.template = /* html */ `
-  <h1>{{heading}}</h1>
   <todo-list></todo-list>
 `;
 App.reg('main-app');

@@ -1,8 +1,14 @@
-import { BaseComponent } from '@symbiotejs/symbiote';
-import TodoItem from '../TodoItem';
+import { BaseComponent, Data } from '@symbiotejs/symbiote';
+
 import TodoListHeading from '../TodoListHeading'; // eslint-disable-line no-unused-vars
+import TodoItem from '../TodoItem';
 import template from './template.html';
 import styles from './styles.css'; // eslint-disable-line no-unused-vars
+
+Data.registerNamedCtx('todo-list', {
+  count: 0,
+  items: [],
+});
 
 class TodoList extends BaseComponent {
   get items() {
@@ -31,6 +37,17 @@ class TodoList extends BaseComponent {
 
   initCallback() {
     this.$.addItem();
+
+    const ctx = Data.getNamedCtx('todo-list');
+    ctx.sub('items', (items) => {
+      if (items.some(i => i.checked)) {
+        this.ref.clearCheckedButton.removeAttribute('disabled');
+        this.ref.removeCheckedButton.removeAttribute('disabled');
+      } else {
+        this.ref.clearCheckedButton.setAttribute('disabled', true);
+        this.ref.removeCheckedButton.setAttribute('disabled', true);
+      }
+    });
   }
 }
 
