@@ -1,9 +1,5 @@
 <div>
-    <h2 class="heading" ref="heading">{{heading}}</h2>
-    <input ref="input" set="onblur: handleBlur; value: heading" hidden />
-    <button ref="editHeadingButton" set="onclick: editHeading">Edit Heading</button>
-    <br/>
-    <br/>
+    <todo-list-heading></todo-list-heading>
     <div ref="list_wrapper"></div>
     <div class="toolbar">
         <button set="onclick: addItem">Add Item</button>

@@ -1,6 +1,6 @@
 import { BaseComponent } from '@symbiotejs/symbiote';
-import { TODO_LIST_HEADING } from '../../constants';
 import TodoItem from '../TodoItem';
+import TodoListHeading from '../TodoListHeading'; // eslint-disable-line no-unused-vars
 import template from './template.html';
 import styles from './styles.css'; // eslint-disable-line no-unused-vars
 
@@ -10,19 +10,6 @@ class TodoList extends BaseComponent {
   }
 
   init$ = {
-    heading: TODO_LIST_HEADING,
-    editHeading: () => {
-      this.ref.heading.setAttribute('hidden', 'hidden');
-      this.ref.input.removeAttribute('hidden');
-
-      this.ref.input.focus();
-    },
-    handleBlur: (e) => {
-      this.$.heading = e.target.value;
-
-      this.ref.heading.removeAttribute('hidden');
-      this.ref.input.setAttribute('hidden', 'hidden');
-    },
     addItem: () => {
       this.ref.list_wrapper.appendChild(new TodoItem());
     },
@@ -43,18 +30,11 @@ class TodoList extends BaseComponent {
   };
 
   initCallback() {
-    // Add first item:
     this.$.addItem();
-
-    this.sub('heading', (val) => {
-      if (!val) {
-        this.$.heading = TODO_LIST_HEADING;
-      }
-    });
   }
 }
 
-TodoList.template = /* html */ template;
+TodoList.template = template;
 TodoList.reg('todo-list');
 
 export default TodoList;

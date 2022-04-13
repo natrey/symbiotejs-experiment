@@ -1,0 +1,24 @@
+@import url('../../common/styles/html.css');
+
+.heading-wrapper {
+    display: inline-flex;
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.heading {
+    color: var(--primary-color);
+    margin: 0 12px 0 0;
+}
+
+.heading_hidden {
+    visibility: hidden;
+    opacity: 0;
+    min-width: 120px;
+}
+
+.input {
+    position: absolute;
+    left: 0;
+    right: 56px;
+}
