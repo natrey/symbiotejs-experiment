@@ -1,8 +1,7 @@
 import { BaseComponent } from '@symbiotejs/symbiote';
 
-import commonStyles from './common/styles/html.css'; // eslint-disable-line no-unused-vars
-
-import TodoList from './components/TodoList'; // eslint-disable-line no-unused-vars
+import commonStyles from './common/styles/html.css';
+import TodoList from './components/TodoList';
 
 class App extends BaseComponent {
 }

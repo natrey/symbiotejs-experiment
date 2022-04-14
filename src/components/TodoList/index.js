@@ -2,13 +2,13 @@ import { BaseComponent, Data, applyAttributes } from '@symbiotejs/symbiote';
 import { formatDate } from '@funboxteam/chronos';
 import { LS_TODO_LIST } from '../../constants';
 
-import TodoListHeading from '../TodoListHeading'; // eslint-disable-line no-unused-vars
-import TodoListEmpty from '../TodoListEmpty'; // eslint-disable-line no-unused-vars
-import TodoListProgressBar from '../TodoListProgressBar'; // eslint-disable-line no-unused-vars
+import TodoListHeading from '../TodoListHeading';
+import TodoListEmpty from '../TodoListEmpty';
+import TodoListProgressBar from '../TodoListProgressBar';
 import TodoItem from '../TodoItem';
 
 import template from './template.html';
-import styles from './styles.css'; // eslint-disable-line no-unused-vars
+import styles from './styles.css';
 
 const lSData = localStorage.getItem(LS_TODO_LIST);
 

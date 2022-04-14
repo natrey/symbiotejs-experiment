@@ -1,7 +1,7 @@
 import { BaseComponent, Data } from '@symbiotejs/symbiote';
 
 import template from './template.html';
-import styles from './styles.css'; // eslint-disable-line no-unused-vars
+import styles from './styles.css';
 
 class TodoItem extends BaseComponent {
   constructor(props) {

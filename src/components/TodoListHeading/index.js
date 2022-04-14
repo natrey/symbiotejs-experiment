@@ -1,7 +1,7 @@
 import { BaseComponent } from '@symbiotejs/symbiote';
 import { TODO_LIST_HEADING } from '../../constants';
 import template from './template.html';
-import styles from './styles.css'; // eslint-disable-line no-unused-vars
+import styles from './styles.css';
 
 class TodoListHeading extends BaseComponent {
   init$ = {
