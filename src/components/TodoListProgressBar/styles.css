@@ -1,0 +1,28 @@
+.todo-list-progress-bar {
+    margin: 16px 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.todo-list-progress-bar__line,
+.todo-list-progress-bar__progress {
+    height: 10px;
+    flex-shrink: 0;
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--light-grey);
+    margin-bottom: 12px;
+}
+
+.todo-list-progress-bar__line {
+    position: relative;
+}
+
+.todo-list-progress-bar__progress {
+    position: absolute;
+    width: auto;
+    background: linear-gradient(90deg, rgba(252,176,69,1) 0%, rgba(253,29,29,1) 49%, rgba(131,58,180,1) 100%);
+    transition: width .3s;
+}
+

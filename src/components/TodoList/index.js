@@ -2,6 +2,7 @@ import { BaseComponent, Data } from '@symbiotejs/symbiote';
 
 import TodoListHeading from '../TodoListHeading'; // eslint-disable-line no-unused-vars
 import TodoListEmpty from '../TodoListEmpty'; // eslint-disable-line no-unused-vars
+import TodoListProgressBar from '../TodoListProgressBar'; // eslint-disable-line no-unused-vars
 import TodoItem from '../TodoItem';
 
 import template from './template.html';
@@ -52,8 +53,14 @@ class TodoList extends BaseComponent {
 
       if (!items.length) {
         this.ref.todoListEmpty.removeAttribute('hidden');
-      } else if (!this.ref.todoListEmpty.hasAttribute('hidden')) {
-        this.ref.todoListEmpty.setAttribute('hidden', 'hidden');
+        this.ref.todoListProgressBar.setAttribute('hidden', 'hidden');
+      } else {
+        if (!this.ref.todoListEmpty.hasAttribute('hidden')) {
+          this.ref.todoListEmpty.setAttribute('hidden', 'hidden');
+        }
+        if (this.ref.todoListProgressBar.hasAttribute('hidden')) {
+          this.ref.todoListProgressBar.removeAttribute('hidden');
+        }
       }
     });
   }
