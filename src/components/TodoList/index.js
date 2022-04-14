@@ -1,4 +1,4 @@
-import { BaseComponent, Data } from '@symbiotejs/symbiote';
+import { BaseComponent, Data, applyAttributes } from '@symbiotejs/symbiote';
 import { formatDate } from '@funboxteam/chronos';
 import { LS_TODO_LIST } from '../../constants';
 
@@ -89,28 +89,31 @@ class TodoList extends BaseComponent {
 
     ctx.sub('items', (items) => {
       localStorage.setItem(LS_TODO_LIST, JSON.stringify(items));
+
+      const {
+        todoListSorting,
+        todoListProgressBar,
+        todoListEmpty,
+        clearCheckedButton,
+        removeCheckedButton,
+      } = this.ref;
+
       if (items.some(i => i.checked)) {
-        this.ref.clearCheckedButton.removeAttribute('disabled');
-        this.ref.removeCheckedButton.removeAttribute('disabled');
+        applyAttributes(clearCheckedButton, { disabled: false });
+        applyAttributes(removeCheckedButton, { disabled: false });
       } else {
-        this.ref.clearCheckedButton.setAttribute('disabled', true);
-        this.ref.removeCheckedButton.setAttribute('disabled', true);
+        applyAttributes(clearCheckedButton, { disabled: true });
+        applyAttributes(removeCheckedButton, { disabled: true });
       }
 
       if (!items.length) {
-        this.ref.todoListEmpty.removeAttribute('hidden');
-        this.ref.todoListProgressBar.setAttribute('hidden', 'hidden');
-        this.ref.todoListSorting.setAttribute('hidden', 'hidden');
+        applyAttributes(todoListEmpty, { hidden: false });
+        applyAttributes(todoListProgressBar, { hidden: true });
+        applyAttributes(todoListSorting, { hidden: true });
       } else {
-        if (!this.ref.todoListEmpty.hasAttribute('hidden')) {
-          this.ref.todoListEmpty.setAttribute('hidden', 'hidden');
-        }
-        if (this.ref.todoListProgressBar.hasAttribute('hidden')) {
-          this.ref.todoListProgressBar.removeAttribute('hidden');
-        }
-        if (this.ref.todoListSorting.hasAttribute('hidden')) {
-          this.ref.todoListSorting.removeAttribute('hidden');
-        }
+        applyAttributes(todoListEmpty, { hidden: true });
+        applyAttributes(todoListProgressBar, { hidden: false });
+        applyAttributes(todoListSorting, { hidden: false });
       }
     });
   }
