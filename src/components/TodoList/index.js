@@ -1,7 +1,9 @@
 import { BaseComponent, Data } from '@symbiotejs/symbiote';
 
 import TodoListHeading from '../TodoListHeading'; // eslint-disable-line no-unused-vars
+import TodoListEmpty from '../TodoListEmpty'; // eslint-disable-line no-unused-vars
 import TodoItem from '../TodoItem';
+
 import template from './template.html';
 import styles from './styles.css'; // eslint-disable-line no-unused-vars
 
@@ -46,6 +48,12 @@ class TodoList extends BaseComponent {
       } else {
         this.ref.clearCheckedButton.setAttribute('disabled', true);
         this.ref.removeCheckedButton.setAttribute('disabled', true);
+      }
+
+      if (!items.length) {
+        this.ref.todoListEmpty.removeAttribute('hidden');
+      } else if (!this.ref.todoListEmpty.hasAttribute('hidden')) {
+        this.ref.todoListEmpty.setAttribute('hidden', 'hidden');
       }
     });
   }

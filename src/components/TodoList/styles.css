@@ -2,3 +2,7 @@
     max-width: 560px;
     margin: 24px auto;
 }
+
+.todo-list__toolbar {
+    margin-top: 12px;
+}

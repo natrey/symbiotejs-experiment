@@ -1,0 +1,4 @@
+.todo-list-empty {
+    color: var(--secondary-color);
+    margin: 24px 0;
+}

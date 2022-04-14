@@ -1,10 +1,9 @@
 <div class="todo-list">
     <todo-list-heading></todo-list-heading>
+    <todo-list-empty hidden ref="todoListEmpty"></todo-list-empty>
     <div ref="list_wrapper"></div>
-    <br/>
     <div>Total items created: {{todo-list/count}}</div>
-    <br/>
-    <div class="toolbar">
+    <div class="todo-list__toolbar">
         <button set="onclick: addItem">Add Item</button>
         <button ref="clearCheckedButton" set="onclick: clearChecked" disabled>Clear Checked</button>
         <button ref="removeCheckedButton" set="onclick: removeChecked" disabled>Remove Checked</button>
