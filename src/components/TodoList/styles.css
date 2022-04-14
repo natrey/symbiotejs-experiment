@@ -14,5 +14,11 @@
 }
 
 .todo-list__toolbar > * {
-    margin: 0 4px;
+    margin: 0 4px 12px;
+}
+
+@media (max-width: 768px) {
+    .todo-list__toolbar {
+        flex-direction: column;
+    }
 }
