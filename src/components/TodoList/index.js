@@ -36,6 +36,31 @@ class TodoList extends BaseComponent {
         }
       });
     },
+    sortItemsByStatus: () => {
+      const sortedItems = [...this.ref.list_wrapper.children]
+        .sort((a, b) => {
+          const checkboxA = a.querySelector('input[type=checkbox]:checked');
+          const checkboxB = b.querySelector('input[type=checkbox]:checked');
+
+          if (checkboxA && !checkboxB) {
+            return 1;
+          } if (!checkboxA && checkboxB) {
+            return -1;
+          }
+          return 0;
+        });
+      this.ref.list_wrapper.replaceChildren(...sortedItems);
+    },
+    sortItemsByDate: () => {
+      const sortedItems = [...this.ref.list_wrapper.children]
+        .sort((a, b) => {
+          const dateA = a.querySelector('[data=date]').getAttribute('id');
+          const dateB = b.querySelector('[data=date]').getAttribute('id');
+
+          return dateA > dateB ? 1 : -1;
+        });
+      this.ref.list_wrapper.replaceChildren(...sortedItems);
+    },
   };
 
   initCallback() {
@@ -54,11 +79,15 @@ class TodoList extends BaseComponent {
       if (!items.length) {
         this.ref.todoListEmpty.removeAttribute('hidden');
         this.ref.todoListProgressBar.setAttribute('hidden', 'hidden');
+        this.ref.todoListSorting.setAttribute('hidden', 'hidden');
       } else {
         if (!this.ref.todoListEmpty.hasAttribute('hidden')) {
           this.ref.todoListEmpty.setAttribute('hidden', 'hidden');
         }
         if (this.ref.todoListProgressBar.hasAttribute('hidden')) {
+          this.ref.todoListProgressBar.removeAttribute('hidden');
+        }
+        if (this.ref.todoListSorting.hasAttribute('hidden')) {
           this.ref.todoListProgressBar.removeAttribute('hidden');
         }
       }

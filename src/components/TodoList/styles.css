@@ -3,6 +3,16 @@
     margin: 24px auto;
 }
 
+.todo-list__sorting {
+    margin-bottom: 12px;
+}
+
 .todo-list__toolbar {
+    display: flex;
+    justify-content: flex-end;
     margin-top: 12px;
+}
+
+.todo-list__toolbar > * {
+    margin: 0 4px;
 }

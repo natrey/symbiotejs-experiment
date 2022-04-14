@@ -2,8 +2,12 @@
     <todo-list-heading></todo-list-heading>
     <todo-list-progress-bar ref="todoListProgressBar"></todo-list-progress-bar>
     <todo-list-empty hidden ref="todoListEmpty"></todo-list-empty>
+    <div class="todo-list__sorting" ref="todoListSorting">
+        Sort by:
+        <button set="onclick: sortItemsByStatus">status</button>
+        <button set="onclick: sortItemsByDate">date</button>
+    </div>
     <div ref="list_wrapper"></div>
-    
     <div class="todo-list__toolbar">
         <button set="onclick: addItem">Add Item</button>
         <button ref="clearCheckedButton" set="onclick: clearChecked" disabled>Clear Checked</button>

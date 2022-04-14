@@ -45,7 +45,7 @@ class TodoItem extends BaseComponent {
     ctx.pub('count', ctx.read('items').length);
   }
 
-  disconnectedCallback() {
+  destroyCallback() {
     const ctx = Data.getNamedCtx('todo-list');
     ctx.pub('items', ctx.read('items').filter(i => i.createdAt !== this.$.createdAt));
     ctx.pub('count', ctx.read('count') - 1);
