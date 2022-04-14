@@ -1,14 +1,21 @@
 import { BaseComponent, Data } from '@symbiotejs/symbiote';
-import { formatDate } from '@funboxteam/chronos';
 
 import template from './template.html';
 import styles from './styles.css'; // eslint-disable-line no-unused-vars
 
 class TodoItem extends BaseComponent {
+  constructor(props) {
+    super(props);
+
+    this.createdAt = props?.createdAt;
+    this.date = props?.date;
+    this.checkedProp = props?.checked;
+  }
+
   init$ = {
     text: '',
-    createdAt: Date.now(),
-    date: formatDate(Date.now(), 'D.MM, HH:mm:ss'),
+    createdAt: null,
+    date: null,
     remove: () => {
       this.remove();
     },
@@ -38,11 +45,11 @@ class TodoItem extends BaseComponent {
   };
 
   initCallback() {
-    this.ref.edit.focus();
+    if (this.createdAt) this.$.createdAt = this.createdAt;
+    if (this.date) this.$.date = this.date;
+    if (this.checkedProp) this.ref.checkbox.checked = this.checkedProp;
 
-    const ctx = Data.getNamedCtx('todo-list');
-    ctx.pub('items', [...ctx.read('items'), this.data]);
-    ctx.pub('count', ctx.read('items').length);
+    this.ref.edit.focus();
   }
 
   destroyCallback() {

@@ -1,4 +1,6 @@
 import { BaseComponent, Data } from '@symbiotejs/symbiote';
+import { formatDate } from '@funboxteam/chronos';
+import { LS_TODO_LIST } from '../../constants';
 
 import TodoListHeading from '../TodoListHeading'; // eslint-disable-line no-unused-vars
 import TodoListEmpty from '../TodoListEmpty'; // eslint-disable-line no-unused-vars
@@ -8,9 +10,11 @@ import TodoItem from '../TodoItem';
 import template from './template.html';
 import styles from './styles.css'; // eslint-disable-line no-unused-vars
 
+const lSData = localStorage.getItem(LS_TODO_LIST);
+
 Data.registerNamedCtx('todo-list', {
-  count: 0,
-  items: [],
+  count: JSON.parse(lSData)?.length || 0,
+  items: JSON.parse(lSData) || [],
 });
 
 class TodoList extends BaseComponent {
@@ -20,7 +24,17 @@ class TodoList extends BaseComponent {
 
   init$ = {
     addItem: () => {
-      this.ref.list_wrapper.appendChild(new TodoItem());
+      const timestamp = Date.now();
+      const data = {
+        createdAt: timestamp,
+        date: formatDate(timestamp, 'D.MM, HH:mm:ss'),
+        checked: false,
+      };
+      this.ref.list_wrapper.appendChild(new TodoItem(data));
+
+      const ctx = Data.getNamedCtx('todo-list');
+      ctx.pub('items', [...ctx.read('items'), data]);
+      ctx.pub('count', ctx.read('items').length);
     },
     clearChecked: () => {
       this.items.forEach((item) => {
@@ -42,14 +56,11 @@ class TodoList extends BaseComponent {
           const checkboxA = a.querySelector('input[type=checkbox]:checked');
           const checkboxB = b.querySelector('input[type=checkbox]:checked');
 
-          if (checkboxA && !checkboxB) {
-            return 1;
-          } if (!checkboxA && checkboxB) {
-            return -1;
-          }
+          if (checkboxA && !checkboxB) return 1;
+          if (!checkboxA && checkboxB) return -1;
           return 0;
         });
-      this.ref.list_wrapper.replaceChildren(...sortedItems);
+      this.$.updateChildren(sortedItems);
     },
     sortItemsByDate: () => {
       const sortedItems = [...this.ref.list_wrapper.children]
@@ -59,15 +70,25 @@ class TodoList extends BaseComponent {
 
           return dateA > dateB ? 1 : -1;
         });
-      this.ref.list_wrapper.replaceChildren(...sortedItems);
+      this.$.updateChildren(sortedItems);
+    },
+    updateChildren: (children) => {
+      this.ref.list_wrapper.replaceChildren(...children);
     },
   };
 
   initCallback() {
-    this.$.addItem();
-
     const ctx = Data.getNamedCtx('todo-list');
+    if (!ctx.read('items').length) {
+      this.$.addItem();
+    } else {
+      ctx.read('items').forEach(i => {
+        this.ref.list_wrapper.appendChild(new TodoItem(i));
+      });
+    }
+
     ctx.sub('items', (items) => {
+      localStorage.setItem(LS_TODO_LIST, JSON.stringify(items));
       if (items.some(i => i.checked)) {
         this.ref.clearCheckedButton.removeAttribute('disabled');
         this.ref.removeCheckedButton.removeAttribute('disabled');
@@ -88,7 +109,7 @@ class TodoList extends BaseComponent {
           this.ref.todoListProgressBar.removeAttribute('hidden');
         }
         if (this.ref.todoListSorting.hasAttribute('hidden')) {
-          this.ref.todoListProgressBar.removeAttribute('hidden');
+          this.ref.todoListSorting.removeAttribute('hidden');
         }
       }
     });
