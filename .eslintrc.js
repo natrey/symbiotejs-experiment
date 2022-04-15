@@ -7,7 +7,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  ignorePatterns: ['dist/*'],
+  ignorePatterns: ['docs/*'],
   extends: '@funboxteam',
   rules: {
     'no-unused-vars': 'off',
