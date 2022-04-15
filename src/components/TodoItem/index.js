@@ -10,6 +10,7 @@ class TodoItem extends BaseComponent {
     this.createdAt = props?.createdAt;
     this.date = props?.date;
     this.checkedProp = props?.checked;
+    this.text = props?.text;
   }
 
   init$ = {
@@ -24,6 +25,13 @@ class TodoItem extends BaseComponent {
       ctx.pub('items', ctx.read('items').map(i => ({
         ...i,
         checked: i.createdAt === this.$.createdAt ? e.target.checked : i.checked,
+      })));
+    },
+    handleBlur: (e) => {
+      const ctx = Data.getNamedCtx('todo-list');
+      ctx.pub('items', ctx.read('items').map(i => ({
+        ...i,
+        text: i.createdAt === this.$.createdAt ? e.target.innerHTML : i.text,
       })));
     },
   };
@@ -48,6 +56,7 @@ class TodoItem extends BaseComponent {
     if (this.createdAt) this.$.createdAt = this.createdAt;
     if (this.date) this.$.date = this.date;
     if (this.checkedProp) this.ref.checkbox.checked = this.checkedProp;
+    if (this.text) this.ref.edit.innerHTML = this.text;
 
     this.ref.edit.focus();
   }

@@ -29,6 +29,7 @@ class TodoList extends BaseComponent {
         createdAt: timestamp,
         date: formatDate(timestamp, 'D.MM, HH:mm:ss'),
         checked: false,
+        text: '',
       };
       this.ref.list_wrapper.appendChild(new TodoItem(data));
 
