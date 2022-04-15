@@ -1,4 +1,5 @@
 import { BaseComponent, Data } from '@symbiotejs/symbiote';
+import store from '../../store';
 
 import template from './template.html';
 import styles from './styles.css';
@@ -21,15 +22,13 @@ class TodoItem extends BaseComponent {
       this.remove();
     },
     handleChange: (e) => {
-      const ctx = Data.getNamedCtx('todo-list');
-      ctx.pub('items', ctx.read('items').map(i => ({
+      store.updateItems(store.getItems().map(i => ({
         ...i,
         checked: i.createdAt === this.$.createdAt ? e.target.checked : i.checked,
       })));
     },
     handleBlur: (e) => {
-      const ctx = Data.getNamedCtx('todo-list');
-      ctx.pub('items', ctx.read('items').map(i => ({
+      store.updateItems(store.getItems().map(i => ({
         ...i,
         text: i.createdAt === this.$.createdAt ? e.target.innerHTML : i.text,
       })));
@@ -62,9 +61,8 @@ class TodoItem extends BaseComponent {
   }
 
   destroyCallback() {
-    const ctx = Data.getNamedCtx('todo-list');
-    ctx.pub('items', ctx.read('items').filter(i => i.createdAt !== this.$.createdAt));
-    ctx.pub('count', ctx.read('count') - 1);
+    store.updateItems(store.getItems().filter(i => i.createdAt !== this.$.createdAt));
+    store.updateCount(store.getCount() - 1);
   }
 }
 

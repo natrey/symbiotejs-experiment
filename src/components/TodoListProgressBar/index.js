@@ -1,4 +1,5 @@
 import { BaseComponent, Data } from '@symbiotejs/symbiote';
+import store from '../../store';
 
 import template from './template.html';
 import styles from './styles.css';
@@ -9,8 +10,7 @@ class TodoListProgressBar extends BaseComponent {
   };
 
   initCallback() {
-    const ctx = Data.getNamedCtx('todo-list');
-    ctx.sub('items', (items) => {
+    store.onItemsUpdate((items) => {
       this.$.checkedItems = items.filter(i => i.checked).length;
       this.ref.progress.style.width = `${Math.floor((this.$.checkedItems / items.length) * 1e2)}%`;
     });

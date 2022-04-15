@@ -1,6 +1,7 @@
 import { BaseComponent, Data, applyAttributes } from '@symbiotejs/symbiote';
 import { formatDate } from '@funboxteam/chronos';
 import { LS_TODO_LIST } from '../../constants';
+import store from '../../store';
 
 import TodoListHeading from '../TodoListHeading';
 import TodoListEmpty from '../TodoListEmpty';
@@ -9,13 +10,6 @@ import TodoItem from '../TodoItem';
 
 import template from './template.html';
 import styles from './styles.css';
-
-const lSData = localStorage.getItem(LS_TODO_LIST);
-
-Data.registerNamedCtx('todo-list', {
-  count: JSON.parse(lSData)?.length || 0,
-  items: JSON.parse(lSData) || [],
-});
 
 class TodoList extends BaseComponent {
   get items() {
@@ -33,9 +27,8 @@ class TodoList extends BaseComponent {
       };
       this.ref.list_wrapper.appendChild(new TodoItem(data));
 
-      const ctx = Data.getNamedCtx('todo-list');
-      ctx.pub('items', [...ctx.read('items'), data]);
-      ctx.pub('count', ctx.read('items').length);
+      store.updateItems([...store.getItems(), data]);
+      store.updateCount(store.getItems().length);
     },
     clearChecked: () => {
       this.items.forEach((item) => {
@@ -79,18 +72,16 @@ class TodoList extends BaseComponent {
   };
 
   initCallback() {
-    const ctx = Data.getNamedCtx('todo-list');
-    if (!ctx.read('items').length) {
+    const ctxItems = store.getItems();
+    if (!ctxItems.length) {
       this.$.addItem();
     } else {
-      ctx.read('items').forEach(i => {
+      ctxItems.forEach(i => {
         this.ref.list_wrapper.appendChild(new TodoItem(i));
       });
     }
 
-    ctx.sub('items', (items) => {
-      localStorage.setItem(LS_TODO_LIST, JSON.stringify(items));
-
+    store.onItemsUpdate((items) => {
       const {
         todoListSorting,
         todoListProgressBar,
