@@ -1,8 +1,8 @@
 <div class="todo-list">
     <todo-list-heading></todo-list-heading>
-    <todo-list-progress-bar ref="todoListProgressBar"></todo-list-progress-bar>
-    <todo-list-empty hidden ref="todoListEmpty"></todo-list-empty>
-    <div class="todo-list__sorting" ref="todoListSorting">
+    <todo-list-progress-bar set="@hidden: isTodoListHidden"></todo-list-progress-bar>
+    <todo-list-empty set="@hidden: isTodoListEmpty"></todo-list-empty>
+    <div class="todo-list__sorting" set="@hidden: isTodoListHidden">
         Sort by:
         <button set="onclick: sortItemsByStatus">status</button>
         <button set="onclick: sortItemsByDate">date</button>
@@ -10,7 +10,7 @@
     <div ref="list_wrapper"></div>
     <div class="todo-list__toolbar">
         <button set="onclick: addItem">Add Item</button>
-        <button ref="clearCheckedButton" set="onclick: clearChecked" disabled>Clear Checked</button>
-        <button ref="removeCheckedButton" set="onclick: removeChecked" disabled>Remove Checked</button>
+        <button set="onclick: clearChecked; @disabled: isToolbarDisabled">Clear Checked</button>
+        <button set="onclick: removeChecked; @disabled: isToolbarDisabled" disabled>Remove Checked</button>
     </div>
 </div>

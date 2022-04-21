@@ -3,7 +3,7 @@
         <input class="todo-item__checkbox" ref="checkbox" type="checkbox" set="onchange: handleChange">
         <div class="todo-item__content">
             <div class="todo-item__input" ref="edit" contenteditable="true" set="textContent: text; onblur: handleBlur"></div>
-            <small>Created at: <span data="date" set="id: createdAt">{{date}}</span></small>
+            <small>Created at: <span set="@data-date: createdAt">{{date}}</span></small>
         </div>
     </div>
     <button class="todo-item__button" set="onclick: remove" title="Remove item">

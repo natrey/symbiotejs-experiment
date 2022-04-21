@@ -1,6 +1,5 @@
-import { BaseComponent, Data, applyAttributes } from '@symbiotejs/symbiote';
+import { BaseComponent } from '@symbiotejs/symbiote';
 import { formatDate } from '@funboxteam/chronos';
-import { LS_TODO_LIST } from '../../constants';
 import store from '../../store';
 
 import TodoListHeading from '../TodoListHeading';
@@ -59,8 +58,8 @@ class TodoList extends BaseComponent {
     sortItemsByDate: () => {
       const sortedItems = [...this.ref.list_wrapper.children]
         .sort((a, b) => {
-          const dateA = a.querySelector('[data=date]').getAttribute('id');
-          const dateB = b.querySelector('[data=date]').getAttribute('id');
+          const dateA = a.querySelector('[data-date]').dataset.date;
+          const dateB = b.querySelector('[data-date]').dataset.date;
 
           return dateA > dateB ? 1 : -1;
         });
@@ -69,6 +68,9 @@ class TodoList extends BaseComponent {
     updateChildren: (children) => {
       this.ref.list_wrapper.replaceChildren(...children);
     },
+    isTodoListEmpty: !!store.getItems().length,
+    isTodoListHidden: !store.getItems().length,
+    isToolbarDisabled: true,
   };
 
   initCallback() {
@@ -80,33 +82,10 @@ class TodoList extends BaseComponent {
         this.ref.list_wrapper.appendChild(new TodoItem(i));
       });
     }
-
     store.onItemsUpdate((items) => {
-      const {
-        todoListSorting,
-        todoListProgressBar,
-        todoListEmpty,
-        clearCheckedButton,
-        removeCheckedButton,
-      } = this.ref;
-
-      if (items.some(i => i.checked)) {
-        applyAttributes(clearCheckedButton, { disabled: false });
-        applyAttributes(removeCheckedButton, { disabled: false });
-      } else {
-        applyAttributes(clearCheckedButton, { disabled: true });
-        applyAttributes(removeCheckedButton, { disabled: true });
-      }
-
-      if (!items.length) {
-        applyAttributes(todoListEmpty, { hidden: false });
-        applyAttributes(todoListProgressBar, { hidden: true });
-        applyAttributes(todoListSorting, { hidden: true });
-      } else {
-        applyAttributes(todoListEmpty, { hidden: true });
-        applyAttributes(todoListProgressBar, { hidden: false });
-        applyAttributes(todoListSorting, { hidden: false });
-      }
+      this.$.isToolbarDisabled = !items.some(i => i.checked);
+      this.$.isTodoListEmpty = !!items.length;
+      this.$.isTodoListHidden = !items.length;
     });
   }
 }
