@@ -1,7 +1,7 @@
 import { BaseComponent } from '@symbiotejs/symbiote';
 
 import template from './template.html';
-import styles from './styles.css';
+import './styles.css';
 
 class TodoListEmpty extends BaseComponent {}
 

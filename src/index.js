@@ -1,7 +1,7 @@
 import { BaseComponent } from '@symbiotejs/symbiote';
 
-import commonStyles from './common/styles/html.css';
-import TodoList from './components/TodoList';
+import './common/styles/html.css';
+import './components/TodoList';
 
 class App extends BaseComponent {
 }

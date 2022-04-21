@@ -9,7 +9,4 @@ module.exports = {
   },
   ignorePatterns: ['docs/*'],
   extends: '@funboxteam',
-  rules: {
-    'no-unused-vars': 'off',
-  },
 };

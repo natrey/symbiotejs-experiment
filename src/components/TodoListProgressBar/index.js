@@ -1,8 +1,8 @@
-import { BaseComponent, Data } from '@symbiotejs/symbiote';
+import { BaseComponent } from '@symbiotejs/symbiote';
 import store from '../../store';
 
 import template from './template.html';
-import styles from './styles.css';
+import './styles.css';
 
 class TodoListProgressBar extends BaseComponent {
   init$ = {

@@ -2,13 +2,13 @@ import { BaseComponent } from '@symbiotejs/symbiote';
 import { formatDate } from '@funboxteam/chronos';
 import store from '../../store';
 
-import TodoListHeading from '../TodoListHeading';
-import TodoListEmpty from '../TodoListEmpty';
-import TodoListProgressBar from '../TodoListProgressBar';
+import '../TodoListHeading';
+import '../TodoListEmpty';
+import '../TodoListProgressBar';
 import TodoItem from '../TodoItem';
 
 import template from './template.html';
-import styles from './styles.css';
+import './styles.css';
 
 class TodoList extends BaseComponent {
   get items() {
